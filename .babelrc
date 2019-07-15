@@ -22,6 +22,7 @@
     "@babel/preset-react",
   ],
   "plugins": [
+    "react-hot-loader/babel",
     [
       "@babel/plugin-transform-runtime",
       {
