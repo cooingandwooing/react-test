@@ -2,50 +2,17 @@
 const path = require('path');
 const HTMLPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const webpackMerge = require('webpack-merge'); // 合并webpack 配置
+const baseConfig = require('./webpack.base');
 const isDev = process.env.NODE_ENV === 'development';
-
-const config = {
+// 后面的内容  对比覆盖前面的内容 没有则插入 有则覆盖
+const config = webpackMerge(baseConfig, {
   entry: {
     // 根据app的依赖关系 将工程整体打包
     app: path.join(__dirname, '../client/app.js'),
   },
   output: {
     filename: '[name].[hash].js',
-    path: path.join(__dirname, '../dist'),
-    // 加在静态资源前面 前缀区分，部署网上的时候 非常有用比如 添加域名
-    publicPath: '/public/',// /public  太坑了  /public/  这样写才行  不然 hot 不能热更新
-  },
-  module: {
-    rules: [
-      {
-        enforce: 'pre',
-        test: /.(js|jsx)$/,
-        loader: 'eslint-loader',
-        exclude: [
-          path.resolve(__dirname, '../node_modules')
-        ]
-
-      },
-      {
-        // 哪种类型文件
-        test: /.jsx$/,
-        loader: 'babel-loader'
-      },
-      {
-        // 哪种类型文件
-        test: /.js$/,
-        exclude: [
-          path.join(__dirname, '../node_modules')
-        ],
-        use: {
-          loader: "babel-loader",
-        }
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
   },
   mode: 'development',
   plugins: [
@@ -60,7 +27,7 @@ const config = {
       'react-dom': '@hot-loader/react-dom'
     }
   }
-};
+});
 //config.plugins.push(new webpack.HotModuleReplacementPlugin())
 // http://localhost:8888/filename
 if (isDev) {
