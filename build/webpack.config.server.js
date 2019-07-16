@@ -1,5 +1,5 @@
 //要用到该包的命令执行任务的就需要全局安装，要通过require引入使用的就需要本地安装
-const path = require('path')
+const path = require('path');
 // 不需要生产html文件
 module.exports = {
     target: 'node',//使用在哪种环境中执行
@@ -17,6 +17,15 @@ module.exports = {
     module: {
         rules: [
             {
+                enforce: 'pre',
+                test: /.(js|jsx)$/,
+                loader: 'eslint-loader',
+                exclude: [
+                    path.resolve(__dirname, '../node_modules')
+                ]
+
+            },
+            {
                 // 哪种类型文件
                 test: /.jsx$/,
                 loader: 'babel-loader'
@@ -32,6 +41,6 @@ module.exports = {
         ]
     },
     mode: 'development',
-}
+};
 
 //public/app/hash.js

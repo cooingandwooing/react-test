@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",// 修改器默认解析器
+  "env": {
+    "browser": true,// window.  等写法可一使用
+    "es6": true,
+    "node": true // webpack里定义了一些node的环境变量比如process
+  },
+  "parserOptions": {
+    "ecmaVersion": 6, //es2016
+    "sourceType": "module" //模块方式写代码
+  },
+  "extends": "airbnb",// 这个公司做了react的流行的规范
+  "rules": {
+    "semi": [0],
+    "react/jsx-filename-extension": [0],
+    "no-empty": [0],
+    "no-undef": [0],
+    "react/jsx-space-before-closing": [0],
+    "no-unused-vars": [0]
+  }
+}
